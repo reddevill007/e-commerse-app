@@ -1,11 +1,12 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Catogory from '../assets/categories.json'
 
-{/* <Link className="nav-link" to="/">Home</Link> */ }
-
 const Homepage = () => {
+
+    const [id, setId] = useState('fgsa2142fa');
+
     const DisplayData = Catogory.map(
         (info) => {
             return (

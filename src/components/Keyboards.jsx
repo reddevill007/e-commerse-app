@@ -3,16 +3,26 @@ import ProductDetails from '../assets/products.json'
 import styled from 'styled-components'
 
 const Keyboards = () => {
+    const addToCart = (inStock, price, currency) => {
+        if (inStock) {
+            alert("Added to cart");
+        }
+        else {
+            alert("Product out of stock");
+        }
+    }
+
     const DisplayData = ProductDetails.map(
         (info) => {
             return (
-                <div>
+                <div key={info.id}>
                     {info.keyboard ? <BoxWrapper>
                         <img src={info.thumbnail} alt="" />
                         <h1>{info.name}</h1>
                         <p>{info.price} {info.currency}</p>
                         {info.delivery ? <p>Diliverable</p> : <p>Non Diliverable</p>}
                         {info.inStock ? <p>In Stock</p> : <p>Out of Stock</p>}
+                        <Button onClick={() => addToCart(info.inStock, info.price, info.currency)}>Add to cart</Button>
                     </BoxWrapper> : <None></None>}
                 </div>
             )
@@ -59,5 +69,20 @@ const BoxWrapper = styled.div`
         height: 200px;
         object-fit: cover;
         background: #fff;
+    }
+`
+
+const Button = styled.button`
+    background: #9A9CE9;
+    border-radius: 3px;
+    border: 2px solid #fff;
+    padding: 10px 16px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    :hover {
+        color: #9A9CE9;
+        background: transparent;
+        border: 2px solid #9A9CE9;
     }
 `

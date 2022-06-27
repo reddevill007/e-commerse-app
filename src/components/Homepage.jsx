@@ -10,7 +10,7 @@ const Homepage = () => {
     const DisplayData = Catogory.map(
         (info) => {
             return (
-                <GoTo className="nav-link" to={"/" + info.name}>
+                <GoTo key={info.id} className="nav-link" to={"/" + info.name}>
                     <Box>
                         <h1>{info.name}</h1>
                         <p>{info.description}</p>

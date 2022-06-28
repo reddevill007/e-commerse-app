@@ -1,16 +1,23 @@
-import React from 'react'
+import { React, useState } from 'react'
 import ProductDetails from '../assets/products.json'
 import styled from 'styled-components'
+import Cart from './Cart'
 
 const Headphones = () => {
-    const addToCart = (inStock, price, currency) => {
+    const [count, setCount] = useState(0)
+    const [productID, setProductID] = useState([]);
+
+    const addToCart = (id, inStock, price, currency) => {
         if (inStock) {
             alert("Added to cart");
+            setCount(count + 1)
+            setProductID(old => [...old, id])
         }
         else {
             alert("Product out of stock");
         }
     }
+
     const DisplayData = ProductDetails.map(
         (info) => {
             return (
@@ -21,15 +28,18 @@ const Headphones = () => {
                         <p>{info.price} {info.currency}</p>
                         {info.delivery ? <p>Diliverable</p> : <p>Non Diliverable</p>}
                         {info.inStock ? <p>In Stock</p> : <p>Out of Stock</p>}
-                        <Button onClick={() => addToCart(info.inStock, info.price, info.currency)}>Add to cart</Button>
-                    </BoxWrapper> : <div></div>}
+                        <Button onClick={() => addToCart(info.id, info.inStock, info.price, info.currency)}>Add to cart</Button>
+                    </BoxWrapper> : <None></None>}
                 </div>
             )
         }
     )
-    return (
 
-        <ProductWrapper>{DisplayData}</ProductWrapper>
+    return (
+        <>
+            <Cart count={count} productID={productID} />
+            <ProductWrapper>{DisplayData}</ProductWrapper>
+        </>
     )
 }
 
@@ -44,6 +54,10 @@ const ProductWrapper = styled.div`
     gap: 50px;
     flex-wrap: wrap;
     min-height: 100vh;
+`
+
+const None = styled.div`
+    display: none;
 `
 
 const BoxWrapper = styled.div`

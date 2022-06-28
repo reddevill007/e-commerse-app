@@ -1,11 +1,17 @@
-import React from 'react'
+import { React, useState } from 'react'
 import ProductDetails from '../assets/products.json'
 import styled from 'styled-components'
+import Cart from './Cart'
 
 const Keyboards = () => {
-    const addToCart = (inStock, price, currency) => {
+    const [count, setCount] = useState(0)
+    const [productID, setProductID] = useState([]);
+
+    const addToCart = (id, inStock, price, currency) => {
         if (inStock) {
             alert("Added to cart");
+            setCount(count + 1)
+            setProductID(old => [...old, id])
         }
         else {
             alert("Product out of stock");
@@ -22,15 +28,17 @@ const Keyboards = () => {
                         <p>{info.price} {info.currency}</p>
                         {info.delivery ? <p>Diliverable</p> : <p>Non Diliverable</p>}
                         {info.inStock ? <p>In Stock</p> : <p>Out of Stock</p>}
-                        <Button onClick={() => addToCart(info.inStock, info.price, info.currency)}>Add to cart</Button>
+                        <Button onClick={() => addToCart(info.id, info.inStock, info.price, info.currency)}>Add to cart</Button>
                     </BoxWrapper> : <None></None>}
                 </div>
             )
         }
     )
     return (
-
-        <ProductWrapper>{DisplayData}</ProductWrapper>
+        <>
+            <Cart count={count} productID={productID} />
+            <ProductWrapper>{DisplayData}</ProductWrapper>
+        </>
     )
 }
 
